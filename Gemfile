@@ -12,6 +12,7 @@ gem "rake"
 gem "rspec", "~> 3.0"
 
 # Linter
+gem "fasterer", "~> 0.11.0"
 gem "rubocop", "~> 1.21"
 gem "rubocop-rake"
 gem "rubocop-rspec", require: false

@@ -5,6 +5,13 @@ module AceOperation
   class Base
     include AceCommand
 
+    # Monkey patch AceConfig::Setting to alias step to config
+    module ::AceConfig
+      class Setting
+        alias step config
+      end
+    end
+
     attr_accessor :operation_params
 
     configure :operation_steps
@@ -57,12 +64,13 @@ module AceOperation
         end
       end
 
-      def call(operation_params = {}, &block)
+      def call(operation_params = {})
         raise "Invalid operation params" unless operation_params.is_a?(Hash)
 
         super(operation_params) do |operation|
           operation.operation_params = operation_params
-          block.call(operation) if block_given?
+
+          yield operation if block_given?
         end
       end
     end
